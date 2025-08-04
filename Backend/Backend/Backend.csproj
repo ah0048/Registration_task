@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Mapper\" />
+    <Folder Include="Controllers\" />
     <Folder Include="UnitOfWorks\" />
     <Folder Include="Repositories\" />
     <Folder Include="Services\" />

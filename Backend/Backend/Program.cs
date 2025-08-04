@@ -1,6 +1,8 @@
 
 using Backend.Mapper;
 using Backend.Models;
+using Backend.Repositories.Implementations;
+using Backend.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -51,7 +53,7 @@ namespace Backend
                };
            });
             builder.Services.AddAutoMapper(cfg => cfg.AddProfile<MappingConfig>());
-
+            builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
             builder.Services.AddOpenApi();
 
             builder.Services.AddCors(options =>

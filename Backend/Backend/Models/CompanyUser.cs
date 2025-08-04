@@ -12,5 +12,7 @@ namespace Backend.Models
         public string? LogoUrl { get; set; }
         [Required, Url]
         public string WebsiteUrl { get; set; }
+        public string? OtpCode { get; set; }
+        public DateTime? OtpExpiry { get; set; }
     }
 }
