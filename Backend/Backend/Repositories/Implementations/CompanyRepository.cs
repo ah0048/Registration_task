@@ -37,5 +37,13 @@ namespace Backend.Repositories.Implementations
             return _userManager.AddPasswordAsync(user, password);
         }
 
+        public Task<bool> CheckPasswordAsync(CompanyUser user, string password)
+        {
+            return _userManager.CheckPasswordAsync(user, password);
+        }
+        public Task<IdentityResult> UpdateAsync(CompanyUser user)
+        {
+            return _userManager.UpdateAsync(user);
+        }
     }
 }

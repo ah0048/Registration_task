@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using Backend.DTOs;
+using Backend.DTOs.AuthDTOs;
+using Backend.DTOs.HomeDTOs;
 using Backend.Models;
 
 namespace Backend.Mapper
@@ -10,6 +11,7 @@ namespace Backend.Mapper
         {
             CreateMap<RegisterDTO, CompanyUser>().ReverseMap();
             CreateMap<RegisterResultDTO, CompanyUser>().ReverseMap();
+            CreateMap<HomeDTO, CompanyUser>().ReverseMap();
         }
     }
 }

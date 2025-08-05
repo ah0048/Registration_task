@@ -1,4 +1,4 @@
-﻿namespace Backend.DTOs
+﻿namespace Backend.DTOs.AuthDTOs
 {
     public class RegisterResultDTO
     {

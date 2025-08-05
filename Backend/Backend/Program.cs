@@ -27,7 +27,7 @@ namespace Backend
 
             builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
             builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
-            builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
+            builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
 
             builder.Services.AddDbContext<AppDbContext>(
                 options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
@@ -46,7 +46,7 @@ namespace Backend
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
            .AddJwtBearer(options =>
            {
-               var key = builder.Configuration["Jwt:Key"];
+               var key = builder.Configuration["JwtSettings:Key"];
                var secrectKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key));
 
                options.TokenValidationParameters = new TokenValidationParameters()
@@ -55,8 +55,8 @@ namespace Backend
                    ValidateAudience = true,
                    ValidateLifetime = true,
                    ValidateIssuerSigningKey = true,
-                   ValidIssuer = builder.Configuration["Jwt:Issuer"],
-                   ValidAudience = builder.Configuration["Jwt:Audience"],
+                   ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
+                   ValidAudience = builder.Configuration["JwtSettings:Audience"],
                };
            });
 
@@ -65,6 +65,8 @@ namespace Backend
             builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
             builder.Services.AddTransient<IEmailSender, EmailSenderService>();
             builder.Services.AddScoped<IPhotoService, PhotoService>();
+            builder.Services.AddScoped<IAuthService, AuthService>();
+            builder.Services.AddScoped<IHomeService, HomeService>();
 
             builder.Services.AddOpenApi();
 

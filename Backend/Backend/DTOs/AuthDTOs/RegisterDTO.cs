@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
 
-namespace Backend.DTOs
+namespace Backend.DTOs.AuthDTOs
 {
     public class RegisterDTO
     {
