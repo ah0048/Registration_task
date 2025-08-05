@@ -27,6 +27,8 @@ namespace Backend
 
             builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
             builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+            builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
+
             builder.Services.AddDbContext<AppDbContext>(
                 options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
             );
@@ -57,10 +59,13 @@ namespace Backend
                    ValidAudience = builder.Configuration["Jwt:Audience"],
                };
            });
+
             builder.Services.AddAutoMapper(cfg => cfg.AddProfile<MappingConfig>());
+
             builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
             builder.Services.AddTransient<IEmailSender, EmailSenderService>();
             builder.Services.AddScoped<IPhotoService, PhotoService>();
+
             builder.Services.AddOpenApi();
 
             builder.Services.AddCors(options =>
