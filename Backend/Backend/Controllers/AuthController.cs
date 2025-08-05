@@ -1,12 +1,73 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Backend.DTOs.AuthDTOs;
+using Backend.Services.Implementation;
+using Backend.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Backend.Controllers
 {
-    public class AuthController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class AuthController : ControllerBase
     {
-        public IActionResult Index()
+        private readonly IAuthService _authService;
+
+        public AuthController(IAuthService authService)
         {
-            return View();
+            _authService = authService;
+        }
+
+
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] RegisterDTO registerDTO)
+        {
+            var result = await _authService.Register(registerDTO);
+            if (result.IsSuccess)
+                return Ok(result.Data);
+
+            return BadRequest(result.ErrorMessage);
+        }
+
+        [HttpPost("otp-valid")]
+        public async Task<IActionResult> OtpValidation([FromBody] CheckOtpDTO checkOtpDTO)
+        {
+            var result = await _authService.IsOtpValid(checkOtpDTO);
+            if (result.IsSuccess)
+                return Ok(result.Data);
+
+            return BadRequest(result.ErrorMessage);
+        }
+
+        [HttpPost("resend-otp/{userId}")]
+        public async Task<IActionResult> ResendOtp(string userId)
+        {
+            var result = await _authService.ResendOtp(userId);
+            if (result.IsSuccess)
+                return Ok(result.Data);
+
+            return BadRequest(result.ErrorMessage);
+        }
+
+        [HttpPost("set-password")]
+        public async Task<IActionResult> SetPassword([FromBody] SetPasswordDTO setPasswordDTO)
+        {
+            var result = await _authService.SetPassword(setPasswordDTO);
+            if (result.IsSuccess)
+                return Ok(result.Data);
+
+            return BadRequest(result.ErrorMessage);
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginDTO loginDTO)
+        {
+            var result = await _authService.Login(loginDTO);
+            if (result.IsSuccess)
+                return Ok(result.Data);
+
+            return BadRequest(result.ErrorMessage);
         }
     }
 }

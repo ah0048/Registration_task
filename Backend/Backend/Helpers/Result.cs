@@ -37,7 +37,6 @@
     {
         public T Data { get; set; }
 
-        // Factory methods
         public static Result<T> Success(T data)
         {
             return new Result<T> 

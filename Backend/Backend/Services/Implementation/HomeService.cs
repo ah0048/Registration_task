@@ -17,7 +17,7 @@ namespace Backend.Services.Implementation
             _mapper = mapper;
         }
 
-        public async Task<Result<HomeDTO>> GetHome(string userId)
+        public async Task<Result<HomeDTO>> GetHomeData(string userId)
         {
             var user = await _companyRepo.FindByIdAsync(userId);
             if (user == null)

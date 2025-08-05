@@ -162,23 +162,23 @@ namespace Backend.Services.Implementation
             }
         }
 
-        public async Task<Result> SetPassword(SetPasswordDTO setPassword)
+        public async Task<Result<string>> SetPassword(SetPasswordDTO setPassword)
         {
             try
             {
                 var user = await _companyRepo.FindByIdAsync(setPassword.Id);
                 if (user == null)
-                    return Result.Failure("User not found");
+                    return Result<string>.Failure("User not found");
 
                 
                 if (string.IsNullOrWhiteSpace(user.OtpCode) || user.OtpExpiry == null || user.OtpExpiry <= DateTime.Now)
-                    return Result.Failure("OTP has expired. Please request a new OTP");
+                    return Result<string>.Failure("OTP has expired. Please request a new OTP");
 
                 var result = await _companyRepo.AddPasswordAsync(user, setPassword.NewPassword);
                 if (!result.Succeeded)
                 {
                     var errors = result.Errors.Select(e => e.Description).ToList();
-                    return Result.Failure(errors);
+                    return Result<string>.Failure(errors);
                 }
 
 
@@ -190,14 +190,14 @@ namespace Backend.Services.Implementation
                 if (!updateResult.Succeeded)
                 {
                     var errors = updateResult.Errors.Select(e => e.Description).ToList();
-                    return Result.Failure($"Password set successfully but failed to clear OTP: {string.Join("; ", errors)}");
+                    return Result<string>.Failure($"Password set successfully but failed to clear OTP: {string.Join("; ", errors)}");
                 }
 
-                return Result.Success();
+                return Result<string>.Success("Password was set successfully");
             }
             catch (Exception ex)
             {
-                return Result.Failure($"An unexpected error occurred while setting password: {ex.Message}");
+                return Result<string>.Failure($"An unexpected error occurred while setting password: {ex.Message}");
             }
         }
 
