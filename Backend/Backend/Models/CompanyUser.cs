@@ -10,6 +10,7 @@ namespace Backend.Models
         [Required]
         public string CompanyNameEn { get; set; }
         public string? LogoUrl { get; set; }
+        public string? LogoPublicId { get; set; }
         [Required, Url]
         public string WebsiteUrl { get; set; }
         public string? OtpCode { get; set; }

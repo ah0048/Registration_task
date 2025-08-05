@@ -1,10 +1,14 @@
 
+using Backend.Helpers;
 using Backend.Mapper;
 using Backend.Models;
 using Backend.Repositories.Implementations;
 using Backend.Repositories.Interfaces;
+using Backend.Services.Implementation;
+using Backend.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -21,7 +25,8 @@ namespace Backend
 
             builder.Services.AddControllers();
 
-
+            builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
+            builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
             builder.Services.AddDbContext<AppDbContext>(
                 options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
             );
@@ -54,6 +59,8 @@ namespace Backend
            });
             builder.Services.AddAutoMapper(cfg => cfg.AddProfile<MappingConfig>());
             builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
+            builder.Services.AddTransient<IEmailSender, EmailSenderService>();
+            builder.Services.AddScoped<IPhotoService, PhotoService>();
             builder.Services.AddOpenApi();
 
             builder.Services.AddCors(options =>

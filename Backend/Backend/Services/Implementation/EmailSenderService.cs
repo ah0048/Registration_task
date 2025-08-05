@@ -1,23 +1,25 @@
-﻿using MailKit.Net.Smtp;
+﻿using Backend.Helpers;
+using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.Extensions.Options;
 using MimeKit;
 
-namespace Backend.Services
+namespace Backend.Services.Implementation
 {
     public class EmailSenderService : IEmailSender
     {
-        private readonly IConfiguration _config;
+        private readonly EmailSettings emailSettings;
 
-        public EmailSenderService(IConfiguration config)
+        public EmailSenderService(IOptions<EmailSettings> options)
         {
-            _config = config;
+            emailSettings = options.Value;
         }
 
         public async Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
             var msg = new MimeMessage();
-            msg.From.Add(MailboxAddress.Parse(_config["Gmail:From"]));
+            msg.From.Add(MailboxAddress.Parse(emailSettings.From));
             msg.To.Add(MailboxAddress.Parse(email));
             msg.Subject = subject;
             msg.Body = new TextPart("html") { Text = htmlMessage };
@@ -26,10 +28,9 @@ namespace Backend.Services
             //smtp.CheckCertificateRevocation = false;
 
             
-            int port = int.Parse(_config["Gmail:Port"]);
-            await smtp.ConnectAsync(_config["Gmail:Host"], port, SecureSocketOptions.StartTls);
+            await smtp.ConnectAsync(emailSettings.Host, emailSettings.Port, SecureSocketOptions.StartTls);
 
-            await smtp.AuthenticateAsync(_config["Gmail:From"], _config["Gmail:AppPassword"]);
+            await smtp.AuthenticateAsync(emailSettings.From, emailSettings.AppPassword);
 
             await smtp.SendAsync(msg);
 
