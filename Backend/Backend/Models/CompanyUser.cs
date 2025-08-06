@@ -5,9 +5,9 @@ namespace Backend.Models
 {
     public class CompanyUser: IdentityUser
     {
-        [Required]
+        [Required, MaxLength(50)]
         public string CompanyNameAr { get; set; }
-        [Required]
+        [Required, MaxLength(50)]
         public string CompanyNameEn { get; set; }
         public string? LogoUrl { get; set; }
         public string? LogoPublicId { get; set; }

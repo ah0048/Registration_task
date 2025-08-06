@@ -28,9 +28,9 @@ namespace Backend.Controllers
             var result = await _homeService.GetHomeData(userId);
 
             if (result.IsSuccess)
-                return Ok(result.Data);
+                return Ok(result);
 
-            return BadRequest(result.ErrorMessage);
+            return BadRequest(result);
         }
     }
 }

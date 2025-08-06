@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Backend.DTOs.AuthDTOs;
+using Backend.DTOs.SharedDTOs;
 using Backend.Helpers;
 using Backend.Models;
 using Backend.Repositories.Interfaces;

@@ -42,14 +42,13 @@ export class AuthService {
   }
 
   resendOtp(userId: string): Observable<Result<RegisterResultDto>> {
-    return this.http.post<Result<RegisterResultDto>>(
-      `${this.baseUrl}/resend-otp/${userId}`,
-      null
+    return this.http.get<Result<RegisterResultDto>>(
+      `${this.baseUrl}/resend-otp/${userId}`
     );
   }
 
-  setPassword(dto: SetPasswordDto): Observable<SimpleResult> {
-    return this.http.post<SimpleResult>(`${this.baseUrl}/set-password`, dto);
+  setPassword(dto: SetPasswordDto): Observable<Result<string>> {
+    return this.http.post<Result<string>>(`${this.baseUrl}/set-password`, dto);
   }
 
   login(dto: LoginDto): Observable<Result<string>> {

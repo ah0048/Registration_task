@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Backend.DTOs.AuthDTOs;
 using Backend.DTOs.HomeDTOs;
-using Backend.Helpers;
+using Backend.DTOs.SharedDTOs;
 using Backend.Repositories.Interfaces;
 using Backend.Services.Interfaces;
 

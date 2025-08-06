@@ -1,0 +1,193 @@
+<div
+  class="register-page d-flex align-items-center justify-content-center min-vh-100 bg-light"
+>
+  <div
+    class="card shadow-lg p-4 mt-4"
+    style="max-width: 500px; width: 100%; border-radius: 1rem"
+  >
+    <div class="text-center mb-4">
+      <h2 class="fw-bold mb-2" style="color: var(--bright-blue-dark)">
+        Create Account
+      </h2>
+      <p class="text-muted mb-0">Join us and start your journey!</p>
+    </div>
+    <form [formGroup]="registerForm" (ngSubmit)="submit()" novalidate>
+      <!-- companyNameAr -->
+      <div class="mb-3">
+        <label for="companyNameAr" class="form-label"
+          >company arabic name</label
+        >
+        <input
+          id="companyNameAr"
+          type="text"
+          class="form-control"
+          placeholder="Enter your company arabic name"
+          formControlName="companyNameAr"
+          [ngClass]="{
+            'is-invalid': getCompanyNameAr.invalid && getCompanyNameAr.touched
+          }"
+        />
+        <div
+          *ngIf="getCompanyNameAr.invalid && getCompanyNameAr.touched"
+          class="invalid-feedback"
+        >
+          <div *ngIf="getCompanyNameAr.hasError('required')">
+            Company Arabic name is required.
+          </div>
+          <div *ngIf="getCompanyNameAr.hasError('pattern')">
+            Company Arabic name must contain only Arabic letters and spaces
+            (2-50 characters).
+          </div>
+          <div *ngIf="getCompanyNameAr.hasError('maxlength')">
+            company arabic name must be less than 50 characters
+          </div>
+        </div>
+      </div>
+      <!-- companyNameEn -->
+      <div class="mb-3">
+        <label for="companyNameEn" class="form-label"
+          >company english name</label
+        >
+        <input
+          id="companyNameEn"
+          type="text"
+          class="form-control"
+          placeholder="Enter your company english name"
+          formControlName="companyNameEn"
+          [ngClass]="{
+            'is-invalid': getCompanyNameEn.invalid && getCompanyNameEn.touched
+          }"
+        />
+        <div
+          *ngIf="getCompanyNameEn.invalid && getCompanyNameEn.touched"
+          class="invalid-feedback"
+        >
+          <div *ngIf="getCompanyNameEn.hasError('required')">
+            Company English name is required.
+          </div>
+          <div *ngIf="getCompanyNameEn.hasError('pattern')">
+            Company English name must contain only English letters and spaces
+            (2-50 characters).
+          </div>
+          <div *ngIf="getCompanyNameEn.hasError('maxlength')">
+            company english name must be less than 50 characters
+          </div>
+        </div>
+      </div>
+      <!-- email -->
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input
+          id="email"
+          type="email"
+          class="form-control"
+          placeholder="Enter your email"
+          formControlName="email"
+          [ngClass]="{
+            'is-invalid': getEmail.invalid && getEmail.touched
+          }"
+        />
+        <div
+          *ngIf="getEmail.invalid && getEmail.touched"
+          class="invalid-feedback"
+        >
+          <div *ngIf="getEmail.hasError('required')">email is required.</div>
+          <div *ngIf="getEmail.hasError('email')">
+            Email must be in valid format
+          </div>
+        </div>
+      </div>
+
+      <!-- phoneNumber -->
+      <div class="mb-3">
+        <label for="phoneNumber" class="form-label"
+          >Phone Number (Optional)</label
+        >
+        <input
+          id="phoneNumber"
+          type="text"
+          class="form-control"
+          placeholder="Enter your Phone Number"
+          formControlName="phoneNumber"
+          [ngClass]="{
+            'is-invalid': getPhoneNumber.invalid && getPhoneNumber.touched
+          }"
+        />
+        <div
+          *ngIf="getPhoneNumber.invalid && getPhoneNumber.touched"
+          class="invalid-feedback"
+        >
+          <div *ngIf="getPhoneNumber.hasError('pattern')">
+            phone number must be valid
+          </div>
+        </div>
+      </div>
+
+      <!-- websiteUrl -->
+      <div class="mb-3">
+        <label for="websiteUrl" class="form-label">Website Url</label>
+        <input
+          id="websiteUrl"
+          type="url"
+          class="form-control"
+          placeholder="Enter your company website url"
+          formControlName="websiteUrl"
+          [ngClass]="{
+            'is-invalid': getWebsiteUrl.invalid && getWebsiteUrl.touched
+          }"
+        />
+        <div
+          *ngIf="getWebsiteUrl.invalid && getWebsiteUrl.touched"
+          class="invalid-feedback"
+        >
+          <div *ngIf="getWebsiteUrl.hasError('pattern')">
+            website url must be valid
+          </div>
+          <div *ngIf="getWebsiteUrl.hasError('required')">
+            website url is required
+          </div>
+        </div>
+      </div>
+
+      <!-- logo -->
+      <div class="mb-3">
+        <label for="logo" class="form-label">Company Logo (Optional)</label>
+        <input
+          id="logo"
+          type="file"
+          class="form-control"
+          accept="image/*"
+          (change)="onFileChange($event)"
+        />
+        <small class="form-text text-muted"
+          >Upload your company logo (JPG, PNG, etc.)</small
+        >
+      </div>
+      <button
+        type="submit"
+        class="btn btn-primary w-100 mt-2"
+        [disabled]="registerForm.invalid"
+      >
+        Register
+      </button>
+    </form>
+    <div class="text-center mt-3">
+      <span class="text-muted">Already have an account?</span>
+      <a
+        [routerLink]="['/login']"
+        class="fw-semibold text-primary text-decoration-none ms-1"
+      >
+        Log in here
+      </a>
+    </div>
+  </div>
+</div>
+
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="square-jelly-box"
+>
+  <p style="color: white">Loading...</p>
+</ngx-spinner>

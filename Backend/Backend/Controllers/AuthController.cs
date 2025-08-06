@@ -21,13 +21,13 @@ namespace Backend.Controllers
 
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(RegisterDTO registerDTO)
+        public async Task<IActionResult> Register([FromForm] RegisterDTO registerDTO)
         {
             var result = await _authService.Register(registerDTO);
             if (result.IsSuccess)
-                return Ok(result.Data);
+                return Ok(result);
 
-            return BadRequest(result.ErrorMessage);
+            return BadRequest(result);
         }
 
         [HttpPost("otp-valid")]
@@ -35,19 +35,19 @@ namespace Backend.Controllers
         {
             var result = await _authService.IsOtpValid(checkOtpDTO);
             if (result.IsSuccess)
-                return Ok(result.Data);
+                return Ok(result);
 
-            return BadRequest(result.ErrorMessage);
+            return BadRequest(result);
         }
 
-        [HttpPost("resend-otp/{userId}")]
+        [HttpGet("resend-otp/{userId}")]
         public async Task<IActionResult> ResendOtp(string userId)
         {
             var result = await _authService.ResendOtp(userId);
             if (result.IsSuccess)
-                return Ok(result.Data);
+                return Ok(result);
 
-            return BadRequest(result.ErrorMessage);
+            return BadRequest(result);
         }
 
         [HttpPost("set-password")]
@@ -55,9 +55,9 @@ namespace Backend.Controllers
         {
             var result = await _authService.SetPassword(setPasswordDTO);
             if (result.IsSuccess)
-                return Ok(result.Data);
+                return Ok(result);
 
-            return BadRequest(result.ErrorMessage);
+            return BadRequest(result);
         }
 
         [HttpPost("login")]
@@ -65,9 +65,9 @@ namespace Backend.Controllers
         {
             var result = await _authService.Login(loginDTO);
             if (result.IsSuccess)
-                return Ok(result.Data);
+                return Ok(result);
 
-            return BadRequest(result.ErrorMessage);
+            return BadRequest(result);
         }
     }
 }

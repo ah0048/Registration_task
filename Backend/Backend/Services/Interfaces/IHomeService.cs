@@ -1,5 +1,5 @@
 ﻿using Backend.DTOs.HomeDTOs;
-using Backend.Helpers;
+using Backend.DTOs.SharedDTOs;
 
 namespace Backend.Services.Interfaces
 {

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Backend.Helpers;
 using Microsoft.AspNetCore.Http;
 
 namespace Backend.DTOs.AuthDTOs
@@ -23,6 +24,7 @@ namespace Backend.DTOs.AuthDTOs
         public string? PhoneNumber { get; set; }
         [Required, Url]
         public string WebsiteUrl { get; set; }
+        [AllowedImageExtensions(".jpg,.jpeg,.png,.gif,.bmp,.webp", 5)]
         public IFormFile? Logo { get; set; }
     }
 }
