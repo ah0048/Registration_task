@@ -21,7 +21,7 @@ namespace Backend.Controllers
 
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterDTO registerDTO)
+        public async Task<IActionResult> Register(RegisterDTO registerDTO)
         {
             var result = await _authService.Register(registerDTO);
             if (result.IsSuccess)

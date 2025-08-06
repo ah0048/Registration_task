@@ -18,7 +18,7 @@ namespace Backend.Controllers
         }
 
         [Authorize]
-        [HttpGet("home")]
+        [HttpGet]
         public async Task<IActionResult> GetHomeData()
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;

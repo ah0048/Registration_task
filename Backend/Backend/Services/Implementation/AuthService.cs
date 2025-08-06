@@ -54,7 +54,7 @@ namespace Backend.Services.Implementation
                 issuer: jwtSettings.Issuer,
                 audience: jwtSettings.Audience,
                 claims: userData,
-                expires: DateTime.Now.AddDays(7),
+                expires: DateTime.UtcNow.AddDays(7),
                 signingCredentials: signingCredentials
                 );
 
@@ -108,8 +108,10 @@ namespace Backend.Services.Implementation
                 
                 string otp = GenerateOtp();
                 user.OtpCode = otp;
-                user.OtpExpiry = DateTime.Now.AddMinutes(10);
+                user.OtpExpiry = DateTime.UtcNow.AddMinutes(10);
 
+                var username = user.Email.Split("@")[0];
+                user.UserName = username;
                 
                 var createResult = await _companyRepo.CreateAsync(user);
                 if (!createResult.Succeeded)
@@ -150,7 +152,7 @@ namespace Backend.Services.Implementation
                 if (string.IsNullOrWhiteSpace(user.OtpCode))
                     return Result<bool>.Failure("No OTP found for this user");
 
-                if (user.OtpExpiry == null || user.OtpExpiry <= DateTime.Now)
+                if (user.OtpExpiry == null || user.OtpExpiry <= DateTime.UtcNow)
                     return Result<bool>.Success(false);
 
                 bool isValid = user.OtpCode == checkOtp.OtpCode;
@@ -171,7 +173,7 @@ namespace Backend.Services.Implementation
                     return Result<string>.Failure("User not found");
 
                 
-                if (string.IsNullOrWhiteSpace(user.OtpCode) || user.OtpExpiry == null || user.OtpExpiry <= DateTime.Now)
+                if (string.IsNullOrWhiteSpace(user.OtpCode) || user.OtpExpiry == null || user.OtpExpiry <= DateTime.UtcNow)
                     return Result<string>.Failure("OTP has expired. Please request a new OTP");
 
                 var result = await _companyRepo.AddPasswordAsync(user, setPassword.NewPassword);
@@ -184,7 +186,7 @@ namespace Backend.Services.Implementation
 
                 user.OtpCode = null;
                 user.OtpExpiry = null;
-                
+                user.EmailConfirmed = true;
 
                 var updateResult = await _companyRepo.UpdateAsync(user);
                 if (!updateResult.Succeeded)
@@ -233,12 +235,12 @@ namespace Backend.Services.Implementation
                 if (string.IsNullOrWhiteSpace(user.OtpCode))
                     return Result<RegisterResultDTO>.Failure("No OTP found for this user. Please register again");
 
-                if (user.OtpExpiry != null && user.OtpExpiry > DateTime.Now)
+                if (user.OtpExpiry != null && user.OtpExpiry > DateTime.UtcNow)
                     return Result<RegisterResultDTO>.Failure("Current OTP is still valid. Please use the existing OTP or wait for it to expire");
 
                 string newOtp = GenerateOtp();
                 user.OtpCode = newOtp;
-                user.OtpExpiry = DateTime.Now.AddMinutes(10);
+                user.OtpExpiry = DateTime.UtcNow.AddMinutes(10);
 
                 var updateResult = await _companyRepo.UpdateAsync(user);
                 if (!updateResult.Succeeded)

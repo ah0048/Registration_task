@@ -25,7 +25,7 @@ namespace Backend.Services.Implementation
             msg.Body = new TextPart("html") { Text = htmlMessage };
 
             using var smtp = new SmtpClient();
-            //smtp.CheckCertificateRevocation = false;
+            smtp.CheckCertificateRevocation = false;
 
             
             await smtp.ConnectAsync(emailSettings.Host, emailSettings.Port, SecureSocketOptions.StartTls);
