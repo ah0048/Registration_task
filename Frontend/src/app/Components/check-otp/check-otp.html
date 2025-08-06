@@ -1,1 +1,60 @@
-<p>check-otp works!</p>
+<div
+  class="register-page d-flex align-items-center justify-content-center min-vh-100 bg-light"
+>
+  <div
+    class="card shadow-lg p-4 mt-4"
+    style="max-width: 500px; width: 100%; border-radius: 1rem"
+  >
+    <div class="text-center mb-4">
+      <h2 class="fw-bold mb-2" style="color: var(--bright-blue-dark)">
+        Check OTP
+      </h2>
+    </div>
+    <form [formGroup]="checkOtpForm" (ngSubmit)="submit()" novalidate>
+      <!-- otpCode -->
+      <div class="mb-3">
+        <label
+          for="otpCode"
+          class="form-label"
+          data-toggle="tooltip"
+          data-placement="top"
+          title="your otp is {{ otpToolTip }}"
+        >
+          OTP Code
+        </label>
+        <input
+          id="otpCode"
+          type="text"
+          class="form-control"
+          placeholder="Enter 6-digit OTP code"
+          formControlName="otpCode"
+          maxlength="6"
+          [ngClass]="{
+            'is-invalid': getOtpCode.invalid && getOtpCode.touched
+          }"
+        />
+        <div
+          *ngIf="getOtpCode.invalid && getOtpCode.touched"
+          class="invalid-feedback"
+        >
+          <div *ngIf="getOtpCode.hasError('required')">
+            OTP Code is required.
+          </div>
+          <div *ngIf="getOtpCode.hasError('pattern')">
+            OTP must be exactly 6 digits.
+          </div>
+        </div>
+      </div>
+      <button
+        type="submit"
+        class="btn btn-primary w-100 mt-2"
+        [disabled]="checkOtpForm.invalid"
+      >
+        Check
+      </button>
+    </form>
+    <button type="submit" class="btn btn-dark w-100 mt-2" (click)="resendOTP()">
+      Resend OTP
+    </button>
+  </div>
+</div>

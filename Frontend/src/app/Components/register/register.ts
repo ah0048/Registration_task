@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -43,7 +43,6 @@ export class Register {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private cdr: ChangeDetectorRef,
     private spinner: NgxSpinnerService
   ) {}
 
