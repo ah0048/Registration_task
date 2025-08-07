@@ -333,18 +333,8 @@ Deploy the `dist/` folder to web server or CDN.
 4. Push to the branch
 5. Create a Pull Request
 
-## 📄 License
-
-This project is licensed under the MIT License.
-
-## 👨‍💻 Author
-
-**Ahmed** - [ah0048](https://github.com/ah0048)
-
-## 📞 Support
-
-For questions or support, please contact via WhatsApp: [01142298869]
 
 ---
 
 ⭐ **Star this repository if you found it helpful!**
+
