@@ -118,8 +118,7 @@ export class SetPassword {
           Swal.fire({
             icon: 'error',
             title: 'Failed to resend OTP',
-            text:
-              result.errorMessage || 'An error occurred during registration.',
+            text: result.errorMessage || 'An error occurred.',
           });
         }
       },

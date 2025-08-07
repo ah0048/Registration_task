@@ -1,1 +1,59 @@
-<p>home works!</p>
+<div
+  class="container-fluid min-vh-100 bg-light d-flex align-items-center justify-content-center"
+>
+  <div
+    class="card shadow-lg p-4"
+    style="max-width: 500px; width: 100%; border-radius: 1rem"
+  >
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="text-center py-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p class="mt-3 text-muted">Loading your data...</p>
+    </div>
+
+    <!-- Main Content -->
+    <div *ngIf="!isLoading" class="text-center">
+      <!-- Company Logo -->
+      <div class="mb-4" *ngIf="homeData.logoUrl">
+        <img
+          [src]="homeData.logoUrl"
+          alt="Company Logo"
+          class="rounded"
+          style="height: 80px; max-width: 200px; object-fit: contain"
+          (error)="onImageError($event)"
+        />
+      </div>
+
+      <!-- Default avatar if no logo -->
+      <div class="mb-4" *ngIf="!homeData.logoUrl">
+        <div
+          class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center"
+          style="width: 80px; height: 80px"
+        >
+          <i class="bi bi-building text-white" style="font-size: 2rem"></i>
+        </div>
+      </div>
+
+      <!-- Welcome Message -->
+      <h2 class="fw-bold mb-2" style="color: var(--bright-blue-dark)">
+        Welcome Back!
+      </h2>
+      <p class="text-muted mb-4">
+        Hello,
+        <span class="fw-semibold">{{ homeData.companyNameEn || "User" }}</span>
+      </p>
+
+      <!-- Logout Button -->
+      <button
+        type="button"
+        class="btn btn-outline-danger w-100 mt-3"
+        (click)="logout()"
+      >
+        <i class="bi bi-box-arrow-right me-2"></i>
+        Logout
+      </button>
+    </div>
+  </div>
+</div>

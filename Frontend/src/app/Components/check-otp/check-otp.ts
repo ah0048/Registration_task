@@ -67,8 +67,7 @@ export class CheckOtp {
           Swal.fire({
             icon: 'error',
             title: 'Invalid OTP',
-            text:
-              result.errorMessage || 'An error occurred during registration.',
+            text: result.errorMessage || 'An error occurred.',
           });
         }
       },
@@ -107,8 +106,7 @@ export class CheckOtp {
           Swal.fire({
             icon: 'error',
             title: 'Failed to resend OTP',
-            text:
-              result.errorMessage || 'An error occurred during registration.',
+            text: result.errorMessage || 'An error occurred.',
           });
         }
       },
