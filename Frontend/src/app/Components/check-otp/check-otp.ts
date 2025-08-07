@@ -96,7 +96,6 @@ export class CheckOtp {
         if (result.isSuccess) {
           localStorage.setItem('userId', result.data!.id);
           localStorage.setItem('otpCode', result.data!.otpCode);
-          // Update the tooltip with the new OTP
           this.otpToolTip = result.data!.otpCode;
           Swal.fire({
             title: 'Success!',

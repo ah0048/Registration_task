@@ -157,6 +157,15 @@ namespace Backend.Services.Implementation
                     return Result<bool>.Success(false);
 
                 bool isValid = user.OtpCode == checkOtp.OtpCode;
+
+                user.EmailConfirmed = true;
+                var updateResult = await _companyRepo.UpdateAsync(user);
+                if (!updateResult.Succeeded)
+                {
+                    var errors = updateResult.Errors.Select(e => e.Description).ToList();
+                    return Result<bool>.Failure($"OTP was checked successfully but failed to update confirm user email: {string.Join("; ", errors)}");
+                }
+
                 return Result<bool>.Success(isValid);
             }
             catch (Exception ex)
@@ -173,9 +182,12 @@ namespace Backend.Services.Implementation
                 if (user == null)
                     return Result<string>.Failure("User not found");
 
-                
+                if (!user.EmailConfirmed)
+                    return Result<string>.Failure("OTP hasn't been checked yet");
+
                 if (string.IsNullOrWhiteSpace(user.OtpCode) || user.OtpExpiry == null || user.OtpExpiry <= DateTime.UtcNow)
                     return Result<string>.Failure("OTP has expired. Please request a new OTP");
+
 
                 var result = await _companyRepo.AddPasswordAsync(user, setPassword.NewPassword);
                 if (!result.Succeeded)
@@ -187,7 +199,6 @@ namespace Backend.Services.Implementation
 
                 user.OtpCode = null;
                 user.OtpExpiry = null;
-                user.EmailConfirmed = true;
 
                 var updateResult = await _companyRepo.UpdateAsync(user);
                 if (!updateResult.Succeeded)
@@ -196,7 +207,7 @@ namespace Backend.Services.Implementation
                     return Result<string>.Failure($"Password set successfully but failed to clear OTP: {string.Join("; ", errors)}");
                 }
 
-                return Result<string>.Success("Password was set successfully");
+                return Result<string>.Success("Password was set successfully! You can login now!!");
             }
             catch (Exception ex)
             {
