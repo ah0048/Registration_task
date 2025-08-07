@@ -45,6 +45,8 @@ export class Home implements OnInit {
             icon: 'error',
             title: 'Error',
             text: result.errorMessage || 'Failed to load home data.',
+          }).then(() => {
+            this.router.navigateByUrl('/login');
           });
         }
       },
@@ -63,6 +65,8 @@ export class Home implements OnInit {
           icon: 'error',
           title: 'Error',
           text: errorMessage,
+        }).then(() => {
+          this.router.navigateByUrl('/login');
         });
       },
     });
